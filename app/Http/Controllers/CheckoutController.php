@@ -95,7 +95,7 @@ class CheckoutController extends Controller
             $transaction->save();
 
             // Redirect to Snap Payment Page
-            return redirect()->route('dashboard-transactions')->with('success', 'Berhasil untuk melanjutkan checkout.');
+            return redirect($paymentUrl);
         } catch (Exception $e) {
             abort(500, $e->getMessage());
         }
