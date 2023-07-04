@@ -141,12 +141,17 @@ class TransactionController extends Controller
                                     ->where('created_at', '>=', $startDate)
                                     ->where('created_at', '<=', $endDate)
                                     ->where('transaction_status', '=', $request->transaction_status)
+                                    ->where('total_price', '=', $request->sum('total_price'))
                                     ->get();
+
+        $totalHarga = Transaction::sum('total_price');
 
         $pdf = Pdf::loadView('pages.admin.transaction.cetak', [
             'start_date' => $startDate,
             'end_date' => $endDate,
-            'transactions' => $transactions
+            'transactions' => $transactions,
+            'totalHarga' => $totalHarga
+
         ]);
         return $pdf->download('Transaksi_' . time() . '.pdf');
     }
