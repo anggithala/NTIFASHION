@@ -48,7 +48,7 @@
                 <th>Status Pembayaran</th>
                 <th>Tanggal Transaksi</th>
             </tr>
-             @foreach ($transactions as $transaction)
+            @foreach ($transactions as $transaction)
                 <tr>
                     <td style="text-align: center;">{{ $loop->iteration . '.' }}</td>
                     <td>{{ $transaction->user->name }}</td>
@@ -58,6 +58,10 @@
                     <td>{{ $transaction->sum('total_price') }}</td>
                 </tr>
             @endforeach
+            <tr>
+                <td>Total</td>
+                <td colspan="4">{{ $totalHarga }}</td>
+            </tr>
         </table>
     </main>
 </body>
