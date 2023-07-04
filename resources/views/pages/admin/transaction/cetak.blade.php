@@ -48,13 +48,14 @@
                 <th>Status Pembayaran</th>
                 <th>Tanggal Transaksi</th>
             </tr>
-            @foreach ($transactions as $transaction)
+             @foreach ($transactions as $transaction)
                 <tr>
                     <td style="text-align: center;">{{ $loop->iteration . '.' }}</td>
                     <td>{{ $transaction->user->name }}</td>
                     <td style="text-align: right;">{{ number_format($transaction->total_price, 0, ',', '.') }}</td>
                     <td>{{ $transaction->transaction_status }}</td>
                     <td>{{ \Carbon\Carbon::parse($transaction->created_at)->translatedFormat('j F Y H:i') }}</td>
+                    <td>{{ $transaction->sum('total_price') }}</td>
                 </tr>
             @endforeach
         </table>
