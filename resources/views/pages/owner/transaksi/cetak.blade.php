@@ -55,12 +55,11 @@
                     <td style="text-align: right;">{{ number_format($transaction->total_price, 0, ',', '.') }}</td>
                     <td>{{ $transaction->transaction_status }}</td>
                     <td>{{ \Carbon\Carbon::parse($transaction->created_at)->translatedFormat('j F Y H:i') }}</td>
-                    <td>{{ $transaction->sum('total_price') }}</td>
                 </tr>
             @endforeach
             <tr>
                 <td>Total</td>
-                <td colspan="4">{{ $totalHarga }}</td>
+                <td colspan="4" style="text-align: center">Rp. {{ number_format($totalHarga, 0, ',', '.') }}</td>
             </tr>
         </table>
     </main>

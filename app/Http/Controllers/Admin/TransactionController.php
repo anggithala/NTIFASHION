@@ -21,26 +21,26 @@ class TransactionController extends Controller
         if (Request()->ajax()) {
             $query = Transaction::with(['user']);
             return DataTables::of($query)
-            ->addColumn('action', function ($item) {
-                return '
+                ->addColumn('action', function ($item) {
+                    return '
                     <div class="btn-group">
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle mr-1 mb-1
                             type="button" data-toggle="dropdown">Action Button
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="'. route('transaction.edit', $item->id) .'">
+                                <a class="dropdown-item" href="' . route('transaction.edit', $item->id) . '">
                                     View
                                 </a>
                             </div>
                         </div>
                     </div>
                 ';
-            })
-            ->editColumn('total_price', function ($item) {
+                })
+                ->editColumn('total_price', function ($item) {
                     return 'Rp ' . number_format($item->total_price);
-            })
-            ->editColumn('created_at', function ($item) {
+                })
+                ->editColumn('created_at', function ($item) {
                     $timestamp = $item->created_at; // timestamp awal
                     $timezone = 'Asia/Jakarta'; // zona waktu lokal Indonesia
                     setlocale(LC_TIME, 'id_ID'); // set locale ke bahasa Indonesia
@@ -48,9 +48,8 @@ class TransactionController extends Controller
 
                     return $local_time;
                 })
-            ->rawColumns(['action'])
-            ->make();
-
+                ->rawColumns(['action'])
+                ->make();
         }
 
         return view('pages.admin.transaction.index');
@@ -129,7 +128,8 @@ class TransactionController extends Controller
      * Cetak transaksi
      *
      */
-    public function print(Request $request) {
+    public function print(Request $request)
+    {
         // Ambil tanggal dan bulan
         $startDate = Carbon::now()->month($request->startMonth)->year($request->startYear)->startOfMonth();
 
@@ -138,10 +138,10 @@ class TransactionController extends Controller
         $request->transaction_status;
 
         $transactions = Transaction::with(['user'])
-                                    ->where('created_at', '>=', $startDate)
-                                    ->where('created_at', '<=', $endDate)
-                                    ->where('transaction_status', '=', $request->transaction_status)
-                                    ->get();
+            ->where('created_at', '>=', $startDate)
+            ->where('created_at', '<=', $endDate)
+            ->where('transaction_status', '=', $request->transaction_status)
+            ->get();
 
         $totalHarga = $transactions->sum('total_price');
 
@@ -152,6 +152,7 @@ class TransactionController extends Controller
             'totalHarga' => $totalHarga
 
         ]);
+
         return $pdf->download('Transaksi_' . time() . '.pdf');
     }
 }

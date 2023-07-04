@@ -139,14 +139,12 @@ class PenjualanController extends Controller
 
         $endDate = Carbon::now()->month($request->endMonth)->year($request->endYear)->endOfMonth();
 
-        $request->transaction_status;
-
         $penjualans = Penjualan::where('created_at', '>=', $startDate)
             ->where('created_at', '<=', $endDate)
-            ->where('transaction_status', '=', $request->transaction_status)
+            ->where('status_barang', '=', $request->status_barang)
             ->get();
 
-        $totalHarga = $penjualans->sum('total_price');
+        $totalHarga = $penjualans->sum('harga');
 
         $pdf = Pdf::loadView('pages.admin.penjualan.cetak', [
             'start_date' => $startDate,
@@ -155,6 +153,5 @@ class PenjualanController extends Controller
             'totalHarga' => $totalHarga
         ]);
         return $pdf->download('Penjualan_' . time() . '.pdf');
-        //return $pdf->stream();
     }
 }

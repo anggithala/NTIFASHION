@@ -107,13 +107,13 @@
                             </select>
                         </div>
                     </div>
-                    <label for="transaction_status" class="mt-3 fw-bold">Status Pembayaran</label>
+                    <label for="status_barang" class="mt-3 fw-bold">Status Barang</label>
                     <div class="d-flex">
                         <div>
-                            <select name="transaction_status" class="custom-select" required>
-                                <option value="" selected disabled>Pilih Status Pembayaran</option>
-                                <option>PENDING</option>
-                                <option>SUCCESS</option>
+                            <select name="status_barang" class="custom-select" required>
+                                <option value="" selected disabled>Pilih Status Barang</option>
+                                <option>DIAMBIL</option>
+                                <option>BELUM DIAMBIL</option>
                             </select>
                         </div>
                     </div>

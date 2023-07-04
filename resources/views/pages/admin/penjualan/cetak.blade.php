@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Laporan Penjualan Offline</title>
+    <title>Laporan Transaksi</title>
     <style>
         table {
             margin: 0 auto;
@@ -41,28 +41,27 @@
         <h2 style="margin: 0;">LAPORAN PENJUALAN OFFLINE</h2>
         <h5>Tanggal: {{ $start_date->translatedFormat('j F Y') . ' - ' . $end_date->translatedFormat('j F Y') }}</h5>
         <table>
-    <tr>
-        <th>No.</th>
-        <th>Nama</th>
-        <th>Harga (Rp)</th>
-        <th>Status Pembayaran</th>
-        <th>Tanggal Transaksi</th>
-    </tr>
-    @foreach ($transactions as $transaction)
-      <tr>
-          <td style="text-align: center;">{{ $loop->iteration . '.' }}</td>
-          <td>{{ $transaction->user->name }}</td>
-          <td style="text-align: right;">{{ number_format($transaction->total_price, 0, ',', '.') }}</td>
-          <td>{{ $transaction->transaction_status }}</td>
-          <td>{{ \Carbon\Carbon::parse($transaction->created_at)->translatedFormat('j F Y H:i') }}</td>
-          <td>{{ $transaction->sum('total_price') }}</td>
-      </tr>
-    @endforeach
-    <tr>
-      <td>Total</td>
-      <td colspan="4">{{$totalHarga}}</td>
-    </tr>
-</table>
+            <tr>
+                <th>No.</th>
+                <th>Nama</th>
+                <th>Harga (Rp)</th>
+                <th>Status Barang</th>
+                <th>Tanggal Penjualan</th>
+            </tr>
+            @foreach ($penjualans as $penjualan)
+                <tr>
+                    <td style="text-align: center;">{{ $loop->iteration . '.' }}</td>
+                    <td>{{ $penjualan->name }}</td>
+                    <td style="text-align: right;">{{ number_format($penjualan->harga, 0, ',', '.') }}</td>
+                    <td>{{ $penjualan->status_barang }}</td>
+                    <td>{{ \Carbon\Carbon::parse($penjualan->created_at)->translatedFormat('j F Y H:i') }}</td>
+                </tr>
+            @endforeach
+            <tr>
+                <td>Total</td>
+                <td colspan="4" style="text-align: center">Rp. {{ number_format($totalHarga, 0, ',', '.') }}</td>
+            </tr>
+        </table>
     </main>
 </body>
 
