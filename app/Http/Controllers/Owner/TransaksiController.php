@@ -143,10 +143,13 @@ class TransaksiController extends Controller
                                     ->where('transaction_status', '=', $request->transaction_status)
                                     ->get();
 
+        $totalHarga = $transactions->sum('total_price');
+
         $pdf = Pdf::loadView('pages.owner.transaksi.cetak', [
             'start_date' => $startDate,
             'end_date' => $endDate,
-            'transactions' => $transactions
+            'transactions' => $transactions,
+            'totalHarga' => $totalHarga
         ]);
         return $pdf->download('Transaksi_' . time() . '.pdf');
     }
