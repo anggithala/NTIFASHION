@@ -146,10 +146,13 @@ class JualController extends Controller
             ->where('transaction_status', '=', $request->transaction_status)
             ->get();
 
+        $totalHarga = $penjualans->sum('total_price');
+
         $pdf = Pdf::loadView('pages.owner.jual.cetak', [
             'start_date' => $startDate,
             'end_date' => $endDate,
-            'penjualans' => $penjualans
+            'penjualans' => $penjualans,
+            'totalHarga' => $totalHarga
         ]);
         return $pdf->download('Penjualan_' . time() . '.pdf');
         //return $pdf->stream();
