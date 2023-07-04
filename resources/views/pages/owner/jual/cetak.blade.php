@@ -44,23 +44,24 @@
             <tr>
                 <th>No.</th>
                 <th>Nama</th>
-                <th>Produk</th>
-                <th>Jumlah</th>
                 <th>Harga (Rp)</th>
                 <th>Status Pembayaran</th>
-                <th>Tanggal Penjualan</th>
+                <th>Tanggal Transaksi</th>
             </tr>
-            @foreach ($penjualans as $penjualan)
+            @foreach ($transactions as $transaction)
                 <tr>
                     <td style="text-align: center;">{{ $loop->iteration . '.' }}</td>
-                    <td>{{ $penjualan->name }}</td>
-                    <td>{{ $penjualan->produk }}</td>
-                    <td>{{ $penjualan->jumlah }}</td>
-                    <td style="text-align: right;">{{ number_format($penjualan->harga, 0, ',', '.') }}</td>
-                    <td>{{ $penjualan->status_pembayaran }}</td>
-                    <td>{{ \Carbon\Carbon::parse($penjualan->created_at)->translatedFormat('j F Y H:i') }}</td>
+                    <td>{{ $transaction->user->name }}</td>
+                    <td style="text-align: right;">{{ number_format($transaction->total_price, 0, ',', '.') }}</td>
+                    <td>{{ $transaction->transaction_status }}</td>
+                    <td>{{ \Carbon\Carbon::parse($transaction->created_at)->translatedFormat('j F Y H:i') }}</td>
+                    <td>{{ $transaction->sum('total_price') }}</td>
                 </tr>
             @endforeach
+            <tr>
+                <td>Total</td>
+                <td colspan="4">{{ $totalHarga }}</td>
+            </tr>
         </table>
     </main>
 </body>
